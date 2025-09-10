@@ -1,1 +1,25 @@
+name: API Tests with Newman
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Newman and reporter
+        run: |
+          npm install -g newman newman-reporter-htmlextra
+
+      - name: Run API tests
+        run: |
+          newman run Reqres_collection.json -d users.csv -r cli,htmlextra
 
